@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:philam_lifeaide/constants.dart';
 import 'package:philam_lifeaide/screens/auth/signup.dart';
 import 'package:philam_lifeaide/screens/home/components/tab_controller.dart';
+
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -74,7 +76,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ],
           ),
           SizedBox(
-            height: 30,
+            height: 10,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 32),
@@ -165,7 +167,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 10,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -187,6 +189,24 @@ class _WelcomePageState extends State<WelcomePage> {
                       MaterialPageRoute(builder: (context) => SignupPage()));
                 },
               )
+            ],
+          ),
+          OrDivider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SocalIcon(
+                iconSrc: "assets/icons/facebook.svg",
+                press: () {},
+              ),
+              SocalIcon(
+                iconSrc: "assets/icons/twitter.svg",
+                press: () {},
+              ),
+              SocalIcon(
+                iconSrc: "assets/icons/google-plus.svg",
+                press: () {},
+              ),
             ],
           )
         ],
@@ -275,3 +295,71 @@ class WaveClipper2 extends CustomClipper<Path> {
     return false;
   }
 }
+class OrDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
+      width: size.width * 0.8,
+      child: Row(
+        children: <Widget>[
+          buildDivider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Text(
+              "OR",
+              style: TextStyle(
+                color: kPrimaryColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          buildDivider(),
+        ],
+      ),
+    );
+  }
+
+  Expanded buildDivider() {
+    return Expanded(
+      child: Divider(
+        color: Color(0xFFD9D9D9),
+        height: 1.5,
+      ),
+    );
+  }
+}
+class SocalIcon extends StatelessWidget {
+  final String iconSrc;
+  final Function press;
+  const SocalIcon({
+    Key key,
+    this.iconSrc,
+    this.press,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: kPrimaryLightColor,
+          ),
+          shape: BoxShape.circle,
+        ),
+        child: SvgPicture.asset(
+          iconSrc,
+          height: 30,
+          width: 30,
+        ),
+      ),
+    );
+  }
+}
+
